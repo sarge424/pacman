@@ -23,13 +23,18 @@
 	let clyde;
 	let frame;
 	let score;
+	let remaining;
 
-    function startGame() {
-        arena.start();
+    function startGame(startarena) {
+		if(startarena === undefined){
+			arena.start();
+			remaining = 2;
+		}
         pacman = new char(200 + 10, 400 + 10, '#FFFF00', 20, 20/10);//sp must come to 20 sometime!!!!!!
 		blinky = new char(200 + 10, 180 + 10, 'blinky', 20, 20/11);
 		pinky = new char(240 + 10, 180 + 10, 'pinky', 20, 20/12);
 		clyde = new char(280 + 10, 180 + 10, 'clyde', 20, 20/10);
+		
 		frame = 0;
 		score = 0;
     }
@@ -39,8 +44,8 @@
         key: null,
 		maze: [//0 - tictac   1 - wall   3 - ghosthouse door  4 - blank    5 - pp
 				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-				[1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1],
-				[1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1],
+				[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				[1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1],
 				[1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1],
 				[1, 0, 0, 0, 0, 5, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 5, 0, 0, 0, 0, 1],
 				[1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1],
@@ -54,13 +59,13 @@
 				[1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
 				[1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1],
 				[1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
-				[1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1],
+				[1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1],
 				[1, 0, 1, 5, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 5, 1, 0, 1],
-				[1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1],
-				[1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1],
+				[1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1],
+				[1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1],
 				[1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1],
-				[1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1],
-				[1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1],
+				[1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1],
+				[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
 				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 			],
         start: function () {
@@ -113,6 +118,18 @@
         clear: function () {
             this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         },
+		
+		deathAnim: function () {
+			clearInterval(this.interval);
+			this.interval = setInterval(pacdie, 20);
+			frame = 0;
+		},
+		
+		restart: function () {
+			clearInterval(this.interval);
+			this.interval = setInterval(updateGameArea, 20);
+			frame = 0;
+		},
 
         stop: function () {
             clearInterval(this.interval);
@@ -176,7 +193,7 @@
 			}
 			//find shortest pellet
 			let p = 0;
-			for(var i = 0; i < pellets.length; i += 1){
+			for(var i = 0; i < pellets.length && pellets.length > 0; i += 1){
 				let disx = pellets[i][0] - this.blx;
 				let disy = pellets[i][1] - this.bly;
 				let oldx = pellets[p][0] - this.blx;
@@ -188,9 +205,17 @@
 				}
 			}
 			
-			this.clx = pellets[p][0];
-			this.cly = pellets[p][1];
+			let disx = pellets[p][0] - this.blx;
+			let disy = pellets[p][1] - this.bly;
+			let dis = Math.sqrt(disx*disx + disy*disy);
 			
+			if(pellets.length > 0 && dis < 10){//if pacman is faaaarr away from the pellet, screw it				
+				this.clx = pellets[p][0];
+				this.cly = pellets[p][1];
+			}else{
+				this.clx = this.blx;
+				this.cly = this.bly;
+			}
 			let ctx = arena.context;
 			ctx.beginPath();
 			ctx.strokeStyle = 'orange';
@@ -214,6 +239,57 @@
 		clyde.ghost();
 		gts.updateGTS();
     }
+	
+	function pacdie () {
+		frame += 1;
+		arena.clear();
+		arena.draw();
+		let pacx = pacman.x;
+		let pacy = pacman.y;
+
+		let ang = (Math.PI * 2) * ((60-frame)/60);
+		var ctx = arena.context;
+		
+		if(frame < 60){
+			ctx.beginPath();
+			ctx.fillStyle = 'yellow';
+			ctx.save();
+			ctx.translate(pacx, pacy);
+			ctx.rotate(Math.PI * (frame/60) - Math.PI/2);
+			ctx.translate(-pacx, -pacy);
+			ctx.arc(pacx, pacy, pacman.size/2, 0, ang);
+			ctx.lineTo(pacx,pacy);
+			ctx.fill();
+			ctx.restore();
+		}else{
+			ctx.beginPath();
+			ctx.strokeStyle = 'white';
+			ctx.save();
+			ctx.translate(pacx - 10, pacy - 10);
+			for(var i = 0; i < 8; i++){
+				ctx.moveTo(2, 10);
+				ctx.lineTo(6, 10);
+				ctx.translate(10,10);
+				ctx.rotate(Math.PI/4);
+				ctx.translate(-10,-10);
+			}
+			ctx.translate(-pacx + 10,-pacy + 10);
+			ctx.stroke();
+			ctx.restore();
+			
+			if(frame >= 80){
+				console.log(remaining);
+				if(remaining > 0){
+					remaining -= 1;
+					console.log(remaining);
+					startGame(true);
+					arena.restart();
+				}else{
+					arena.stop();
+				}
+			}
+		}
+	}
 
     function char(x, y, color, size, sp) {
 		this.realx = x;
@@ -438,10 +514,13 @@
 						}
 					}
 				}
-				
-				if(posx === gts.blx && posy === gts.bly)
-					this.dir = -1;
 			}
+			
+			if(Math.abs(this.x - pacman.x) < 5 && Math.abs(this.y - pacman.y) < 5){
+				this.dir = -1;
+				arena.deathAnim();
+			}
+			
 			if(frame - this.p > this.pd){//pause at turns
 				if (this.dir === 0) 
 					this.realx -= this.sp;
